@@ -40,6 +40,8 @@ spec:
                 secretKeyRef:
                   name: ghost-mail
                   key: password
+            - name: storage__active
+              value: s3
             - name: storage__s3__accessKeyId
               valueFrom:
                 secretKeyRef:
@@ -55,6 +57,14 @@ spec:
                 secretKeyRef:
                   name: ghost-storage-r2
                   key: endpoint-url
+            - name: storage__s3__region
+              value: auto
+            - name: storage__s3__bucket
+              value: blog-media
+            - name: storage__s3__forcePathStyle
+              value: "true"
+            - name: storage__s3__assetHost
+              value: "https://media.blog.charliewillis.com"
           volumeMounts:
             - name: ghost-data
               mountPath: /var/lib/ghost/content
