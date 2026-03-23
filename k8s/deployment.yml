@@ -29,6 +29,7 @@ spec:
       containers:
         - name: ghost
           image: ghcr.io/cjwillis48/blog:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 2368
               protocol: TCP
