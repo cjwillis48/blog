@@ -26,27 +26,6 @@ spec:
         fsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
-      initContainers:
-        - name: install-s3-adapter
-          image: ghcr.io/cjwillis48/blog:latest
-          imagePullPolicy: Always
-          command: ["sh", "-c", "mkdir -p /var/lib/ghost/content/adapters/storage/s3 && cp -r /tmp/s3-adapter/* /var/lib/ghost/content/adapters/storage/s3/"]
-          volumeMounts:
-            - name: ghost-data
-              mountPath: /var/lib/ghost/content
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: false
-            capabilities:
-              drop:
-                - ALL
-          resources:
-            requests:
-              memory: 64Mi
-              cpu: 50m
-            limits:
-              memory: 128Mi
-              cpu: 200m
       containers:
         - name: ghost
           image: ghcr.io/cjwillis48/blog:latest
