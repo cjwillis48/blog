@@ -28,7 +28,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: ghost
-          image: ghcr.io/cjwillis48/blog:latest
+          image: ghost:5.130.6
           ports:
             - containerPort: 2368
               protocol: TCP
