@@ -6,6 +6,7 @@ on:
     paths:
       - Dockerfile
       - config.production.json
+      - entrypoint.sh
   workflow_dispatch:
 
 env:
