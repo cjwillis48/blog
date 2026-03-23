@@ -1,0 +1,4 @@
+# Never commit unsealed secrets
+k8s/*-secret.yml
+!k8s/*-secret.sealed.yml
+!k8s/*-secret.yml.tmpl

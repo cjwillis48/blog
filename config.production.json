@@ -1,0 +1,37 @@
+{
+  "url": "https://blog.charliewillis.com",
+  "database": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": "/var/lib/ghost/content/data/ghost.db"
+    }
+  },
+  "mail": {
+    "transport": "SMTP",
+    "from": "noreply@charliewillis.com",
+    "options": {
+      "host": "smtp-relay.brevo.com",
+      "port": 587,
+      "auth": {
+        "user": "a30355001@smtp-brevo.com",
+        "pass": ""
+      }
+    }
+  },
+  "storage": {
+    "active": "s3",
+    "s3": {
+      "accessKeyId": "",
+      "secretAccessKey": "",
+      "region": "auto",
+      "bucket": "blog-media",
+      "endpoint": "",
+      "forcePathStyle": true,
+      "assetHost": "https://media.blog.charliewillis.com"
+    }
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 2368
+  }
+}

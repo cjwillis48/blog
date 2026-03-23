@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost
+  namespace: blog
+  labels:
+    app: ghost
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ghost
+  template:
+    metadata:
+      labels:
+        app: ghost
+    spec:
+      automountServiceAccountToken: false
+      nodeSelector:
+        storage-tier: large
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: ghost
+          image: ghcr.io/cjwillis48/blog:latest
+          ports:
+            - containerPort: 2368
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: mail__options__auth__pass
+              valueFrom:
+                secretKeyRef:
+                  name: ghost-mail
+                  key: password
+            - name: storage__s3__accessKeyId
+              valueFrom:
+                secretKeyRef:
+                  name: ghost-storage-r2
+                  key: access-key-id
+            - name: storage__s3__secretAccessKey
+              valueFrom:
+                secretKeyRef:
+                  name: ghost-storage-r2
+                  key: secret-access-key
+            - name: storage__s3__endpoint
+              valueFrom:
+                secretKeyRef:
+                  name: ghost-storage-r2
+                  key: endpoint-url
+          volumeMounts:
+            - name: ghost-data
+              mountPath: /var/lib/ghost/content
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 500m
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
+          livenessProbe:
+            httpGet:
+              path: /ghost/api/v4/admin/site/
+              port: 2368
+            initialDelaySeconds: 60
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /ghost/api/v4/admin/site/
+              port: 2368
+            initialDelaySeconds: 30
+            periodSeconds: 10
+      volumes:
+        - name: ghost-data
+          persistentVolumeClaim:
+            claimName: ghost-data
