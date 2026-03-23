@@ -62,9 +62,8 @@ spec:
                 secretKeyRef:
                   name: ghost-mail
                   key: password
-            # Storage env vars temporarily removed for debugging
-            # - name: storage__active
-            #   value: s3
+            - name: storage__active
+              value: s3
           volumeMounts:
             - name: ghost-data
               mountPath: /var/lib/ghost/content
