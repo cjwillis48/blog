@@ -62,31 +62,9 @@ spec:
                 secretKeyRef:
                   name: ghost-mail
                   key: password
-            - name: storage__active
-              value: s3
-            - name: storage__s3__accessKeyId
-              valueFrom:
-                secretKeyRef:
-                  name: ghost-storage-r2
-                  key: access-key-id
-            - name: storage__s3__secretAccessKey
-              valueFrom:
-                secretKeyRef:
-                  name: ghost-storage-r2
-                  key: secret-access-key
-            - name: storage__s3__endpoint
-              valueFrom:
-                secretKeyRef:
-                  name: ghost-storage-r2
-                  key: endpoint-url
-            - name: storage__s3__region
-              value: auto
-            - name: storage__s3__bucket
-              value: blog-media
-            - name: storage__s3__forcePathStyle
-              value: "true"
-            - name: storage__s3__assetHost
-              value: "https://media.blog.charliewillis.com"
+            # Storage env vars temporarily removed for debugging
+            # - name: storage__active
+            #   value: s3
           volumeMounts:
             - name: ghost-data
               mountPath: /var/lib/ghost/content
