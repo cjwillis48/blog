@@ -62,8 +62,6 @@ spec:
                 secretKeyRef:
                   name: ghost-mail
                   key: password
-            - name: storage__active
-              value: s3
           volumeMounts:
             - name: ghost-data
               mountPath: /var/lib/ghost/content
