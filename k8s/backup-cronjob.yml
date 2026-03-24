@@ -41,8 +41,10 @@ spec:
                   ENDPOINT="--endpoint-url ${R2_ENDPOINT}"
 
                   # Sync ghost content to a timestamped prefix in R2
+                  # Exclude logs (they change during sync causing non-zero exit)
                   aws s3 sync /var/lib/ghost/content \
                     "s3://ghost-backups/${TIMESTAMP}/" \
+                    --exclude "logs/*" \
                     ${ENDPOINT}
 
                   echo "Backup complete: s3://ghost-backups/${TIMESTAMP}/"
