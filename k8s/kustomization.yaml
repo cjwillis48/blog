@@ -10,5 +10,3 @@ resources:
   - mail-secret.sealed.yml
   - storage-r2-secret.sealed.yml
   - network-policies.yml
-  - backup-cronjob.yml
-  - backup-r2-secret.sealed.yml
