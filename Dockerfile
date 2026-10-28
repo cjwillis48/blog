@@ -1,9 +1,7 @@
-FROM ghost:5.130.6
+FROM ghost:6.73.0
 
-# Install S3 storage adapter into Ghost's versioned adapter path
-# Ghost looks in versions/X.Y.Z/core/server/adapters/storage/ for adapters
-RUN npm install ghost-storage-adapter-s3 && \
-    mkdir -p /var/lib/ghost/versions/5.130.6/core/server/adapters/storage/s3 && \
-    cp -r ./node_modules/ghost-storage-adapter-s3/* /var/lib/ghost/versions/5.130.6/core/server/adapters/storage/s3/
-
+# Ghost 6 ships a built-in S3 storage adapter (S3Storage, AWS SDK v3), configured
+# by storage__S3Storage__* env vars in k8s/deployment.yml. The community
+# ghost-storage-adapter-s3 (AWS SDK v2) that 5.x needed fails Ghost 6's boot-time
+# adapter validation, so it is no longer installed.
 COPY config.production.json /var/lib/ghost/config.production.json
